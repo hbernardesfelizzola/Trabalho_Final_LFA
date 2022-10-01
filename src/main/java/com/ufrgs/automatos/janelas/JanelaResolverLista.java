@@ -1,5 +1,7 @@
 package com.ufrgs.automatos.janelas;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 import com.ufrgs.automatos.JogoMain;
 import com.ufrgs.automatos.controllers.ResponseWord;
 
-public class JanelaInicial extends JFrame {
+public class JanelaResolverLista extends JFrame {
 
 	private static final long serialVersionUID = 8667039720767982981L;
 	private JPanel contentPane;
@@ -34,12 +36,12 @@ public class JanelaInicial extends JFrame {
 	/**
 	 * Create the panel.
 	 */
-	public JanelaInicial() {
+	public JanelaResolverLista() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setCenterBounds(800, 500);
 
 		setContentPane(contentPane);
 		
@@ -104,6 +106,17 @@ public class JanelaInicial extends JFrame {
 		
 		btnVoltarAoMenu.addActionListener(new BackMenuListener());
 		btnNewButton.addActionListener(new WordSolver());
+	}
+	
+	private void setCenterBounds(int width, int height) {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		double widthSrc = screenSize.getWidth()/2;
+		double heightSrc = screenSize.getHeight()/2;
+
+		widthSrc -= width/2;
+		heightSrc -= height/2;
+
+		setBounds((int) widthSrc, (int) heightSrc, width, height);
 	}
 	
 	
