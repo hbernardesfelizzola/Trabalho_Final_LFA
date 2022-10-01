@@ -3,4 +3,22 @@
 	<groupId>com.ufrgs.automatos</groupId>
 	<artifactId>TrabalhoFinalJoguinho</artifactId>
 	<version>1</version>
+
+	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.33</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-zstd</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+
+	</dependencies>
+
 </project>

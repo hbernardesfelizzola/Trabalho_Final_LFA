@@ -1,0 +1,74 @@
+estado_inicial: praca
+
+
+
+estados:
+  praca:
+    caminhos:
+      w: loja
+      e: saida_oeste
+      b: praca
+      d: taverna
+      s: estalagem
+  
+  loja:
+    caminhos:
+      b: loja
+      d: saida_oeste
+  
+  estalagem:
+    caminhos:
+      e: saida_leste
+      b: estalagem
+  
+  taverna:
+    caminhos:
+      b: taverna
+      d: saida_leste
+      s: estalagem
+  
+  saida_leste:
+    caminhos:
+      d: montanha
+      b: saida_leste
+      w: pantano
+  
+  saida_oeste:
+    caminhos:
+      b: saida_oeste
+      s: floresta
+      w: campo
+  
+  campo:
+    caminhos:
+      b: campo
+      d: destino1
+  
+  floresta:
+    caminhos:
+      b: trolls
+      e: destino1
+  
+  destino1:
+    final: false
+  
+  trolls:
+    final: false
+  
+  pantano:
+    caminhos:
+      b: trolls
+      w: destino2
+      d: destino3
+  
+  destino2:
+    final: false
+  
+  montanha:
+    caminhos:
+      s: destino4
+      b: goblins
+      e: destino3
+  
+  destino3:
+    final: true

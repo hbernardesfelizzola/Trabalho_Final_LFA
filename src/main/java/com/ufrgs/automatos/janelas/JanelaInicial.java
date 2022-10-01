@@ -1,42 +1,21 @@
 package com.ufrgs.automatos.janelas;
 
-import java.awt.EventQueue;
-
 import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
-public class JanelaPrincipal extends JFrame {
+public class JanelaInicial extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8667039720767982981L;
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
+	 * Create the panel.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JanelaPrincipal frame = new JanelaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public JanelaPrincipal() {
+	public JanelaInicial() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 702, 492);
 		contentPane = new JPanel();
@@ -56,4 +35,5 @@ public class JanelaPrincipal extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
+
 }
