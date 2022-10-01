@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class PathsController {
 	
@@ -55,6 +56,16 @@ public class PathsController {
 		}
 		
 		return ResponseWord.convertBooleanToResponse(isNodeFinal(current));
+	}
+	
+	public TreeMap<String, ResponseWord> executeWord(ArrayList<String> words) {
+		TreeMap<String, ResponseWord> responses = new TreeMap<>();
+		
+		for (String s : words) {
+			responses.put(s, executeWord(s));
+		}
+		
+		return responses;
 	}
 	
 	public boolean isLangFinite() {

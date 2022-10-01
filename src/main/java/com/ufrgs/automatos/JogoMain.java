@@ -4,14 +4,19 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.ufrgs.automatos.controllers.PathsController;
+import com.ufrgs.automatos.janelas.JanelaInicial;
 
 public class JogoMain {
+	
+	private static PathsController controller;
+	
+	public static PathsController getPathsController() {return controller;}
 	
 	public static void main(String args[]) {
 		
 		updateUI();
 		
-		PathsController controller = new PathsController();
+		controller = new PathsController();
 		
 		//System.out.println(controller.executeWord("ddde"));
 		//System.out.println(controller.isLangFinite());
@@ -23,6 +28,8 @@ public class JogoMain {
 		
 		System.out.println(controller.getEstados());
 		System.out.println(controller.isLangEmpty());
+		
+		new JanelaInicial().setVisible(true);
 	}
 	
 	

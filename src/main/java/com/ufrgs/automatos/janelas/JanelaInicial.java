@@ -1,39 +1,160 @@
 package com.ufrgs.automatos.janelas;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+
+import com.ufrgs.automatos.JogoMain;
+import com.ufrgs.automatos.controllers.ResponseWord;
 
 public class JanelaInicial extends JFrame {
 
 	private static final long serialVersionUID = 8667039720767982981L;
 	private JPanel contentPane;
+	
+	private JButton btnNewButton, btnVoltarAoMenu;
+	
+	private JTextArea textArea;
+	
+	private JLabel textArea1;
 
 	/**
 	 * Create the panel.
 	 */
 	public JanelaInicial() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 702, 492);
+		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("");
+		
+		textArea = new JTextArea();
+		textArea1 = new JLabel("");
+		
+		textArea1.setVerticalAlignment(JLabel.TOP);
+		
+		JScrollPane scroll1 = new JScrollPane(textArea);
+		JScrollPane scroll2 = new JScrollPane(textArea1);
+		
+		scroll1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		
+		btnNewButton = new JButton("Resolver palavras");
+		btnVoltarAoMenu = new JButton("Voltar ao menu");
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(32)
+							.addComponent(scroll1, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
+							.addGap(77)
+							.addComponent(scroll2, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnVoltarAoMenu, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNewButton))
+							.addGap(308)))
+					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(77))
 		);
+		
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(87)
+					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(54)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(scroll1, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scroll2, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE))
+					.addGap(39)
+					.addComponent(btnNewButton)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnVoltarAoMenu)
+					.addContainerGap(37, Short.MAX_VALUE))
 		);
+		
 		contentPane.setLayout(gl_contentPane);
+		
+		
+		btnVoltarAoMenu.addActionListener(new BackMenuListener());
+		btnNewButton.addActionListener(new WordSolver());
 	}
-
+	
+	
+	class BackMenuListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	
+	class WordSolver implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			TreeMap<String, ResponseWord> responses = JogoMain.getPathsController().executeWord(convertStringToList());
+			
+			String text = "<html>";
+			
+			for (String s : responses.keySet()) {
+				text = text + getWordResponse(s, responses.get(s)) + "<br>";
+			}
+			
+			text = text + "</html>";
+			
+			textArea1.setText(text);
+		}
+		
+		private String getWordResponse(String s, ResponseWord response) {
+			switch (response) {
+				case ACCEPTED:
+					return "<font color = 'green'>" + s + " -> " + response.toString() + "</font>";
+					
+				case INDEFINITION:
+					return "<font color = 'red'>" + s + " -> " + response.toString() + "</font>";
+					
+				case REJECTED:
+					return "<font color = 'red'>" + s + " -> " + response.toString() + "</font>";
+			}
+			
+			return "";
+		}
+		
+		private ArrayList<String> convertStringToList() {
+			ArrayList<String> list = new ArrayList<>();
+			
+			for (String s : textArea.getText().split("\n")) {
+				list.add(s);
+			}
+			
+			return list;
+		}
+	}
 }
