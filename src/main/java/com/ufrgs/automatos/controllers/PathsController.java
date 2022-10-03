@@ -75,9 +75,10 @@ public class PathsController {
 		String movimentos = "";
 		
 		for (String state : getEstados().keySet()) {
-			if (this.getPaths(state) == null) continue;
 			
 			s = s + state + ",";
+			
+			if (this.getPaths(state) == null) continue;
 			
 			Map<String, Object> map = this.getPaths(state);
 			for (String terminal : map.keySet()) {

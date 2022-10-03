@@ -51,7 +51,7 @@ public class PathsControllerLucio {
 	}
 	
 	public Set<String> getDeclaredStates() {
-		return getGenericStates(content, "F: ");
+		return getGenericStates(content, "S: ");
 	}
 	
 	public Set<String> getFinalStates() {

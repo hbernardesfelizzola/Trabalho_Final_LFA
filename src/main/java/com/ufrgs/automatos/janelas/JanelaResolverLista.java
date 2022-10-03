@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import com.ufrgs.automatos.JogoMain;
 import com.ufrgs.automatos.controllers.PathsController;
 import com.ufrgs.automatos.controllers.ResponseWord;
+import java.awt.Font;
 
 public class JanelaResolverLista extends JFrame {
 
@@ -32,7 +33,7 @@ public class JanelaResolverLista extends JFrame {
 	
 	private JTextArea textArea;
 	
-	private JLabel textArea1;
+	private JLabel textArea1, infoLangLabel;
 	private JTextField fileName;
 
 	/**
@@ -93,10 +94,18 @@ public class JanelaResolverLista extends JFrame {
 		lblNewLabel_1.setBounds(103, 338, 119, 14);
 		contentPane.add(lblNewLabel_1);
 		
+		infoLangLabel = new JLabel("New label");
+		infoLangLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoLangLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		infoLangLabel.setBounds(432, 25, 318, 23);
+		contentPane.add(infoLangLabel);
+		
 		btnVoltarAoMenu.addActionListener(new BackMenuListener());
 		btnNewButton.addActionListener(new WordSolver());
 		loadAfdButton.addActionListener(new LoadAfdListener());
 		minimizeAfdButton.addActionListener(new MinimizeAfdListener());
+		
+		updateInfoLabel();
 	}
 	
 	private void setCenterBounds(int width, int height) {
@@ -108,6 +117,25 @@ public class JanelaResolverLista extends JFrame {
 		heightSrc -= height/2;
 
 		setBounds((int) widthSrc, (int) heightSrc, width, height);
+	}
+	
+	private void updateInfoLabel() {
+		PathsController controller = JogoMain.getPathsController();
+		
+		String info = "<html>";
+		
+		info = info + "<font color = 'black'>Vazia:</font> " + 
+				getStringReponse(controller.isLangEmpty()) + 
+				" | <font color = 'black'>Finita</font>: " + 
+				getStringReponse(controller.isLangFinite());
+		
+		info = info + "</html>";
+		
+		infoLangLabel.setText(info);
+	}
+	
+	private String getStringReponse(boolean bool) {
+		return bool ? "<font color = 'green'>Sim</font>" : "<font color = 'red'>Não</font>";
 	}
 	
 	
@@ -129,6 +157,7 @@ public class JanelaResolverLista extends JFrame {
 			System.out.println(JogoMain.getPathsController().getEstados());
 			
 			textArea1.setText(JogoMain.getPathsController().getPathsAsString());
+			updateInfoLabel();
 		}
 	}
 	
@@ -147,6 +176,7 @@ public class JanelaResolverLista extends JFrame {
 					JogoMain.setPathsController(controller);
 					textArea1.setText(JogoMain.getPathsController().getPathsAsString());
 					fileName.setText("AFD atualizado");
+					updateInfoLabel();
 				} catch (Exception exp) {
 					fileName.setText("Formatação incorreta");
 					exp.printStackTrace();
