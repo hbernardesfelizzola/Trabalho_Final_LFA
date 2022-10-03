@@ -12,6 +12,8 @@ public class JogoMain {
 	
 	public static PathsController getPathsController() {return controller;}
 	
+	public static void setPathsController(PathsController controllerNew) {controller = controllerNew;}
+	
 	public static void main(String args[]) {
 		
 		updateUI();

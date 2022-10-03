@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.ufrgs.automatos.JogoMain;
 import com.ufrgs.automatos.controllers.ResponseWord;
+import javax.swing.JTextField;
 
 public class JanelaResolverLista extends JFrame {
 
@@ -32,6 +33,7 @@ public class JanelaResolverLista extends JFrame {
 	private JTextArea textArea;
 	
 	private JLabel textArea1;
+	private JTextField fileName;
 
 	/**
 	 * Create the panel.
@@ -46,6 +48,7 @@ public class JanelaResolverLista extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(760, 92, 0, 364);
 		
 		textArea = new JTextArea();
 		textArea1 = new JLabel("");
@@ -53,55 +56,37 @@ public class JanelaResolverLista extends JFrame {
 		textArea1.setVerticalAlignment(JLabel.TOP);
 		
 		JScrollPane scroll1 = new JScrollPane(textArea);
+		scroll1.setBounds(37, 59, 318, 264);
 		JScrollPane scroll2 = new JScrollPane(textArea1);
+		scroll2.setBounds(432, 59, 318, 264);
 		
 		scroll1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		
 		btnNewButton = new JButton("Resolver palavras");
+		btnNewButton.setBounds(333, 362, 119, 23);
 		btnVoltarAoMenu = new JButton("Voltar ao menu");
+		btnVoltarAoMenu.setBounds(333, 396, 119, 23);
+		contentPane.setLayout(null);
+		contentPane.add(scroll1);
+		contentPane.add(scroll2);
+		contentPane.add(btnVoltarAoMenu);
+		contentPane.add(btnNewButton);
+		contentPane.add(lblNewLabel);
 		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		fileName = new JTextField();
+		fileName.setBounds(103, 363, 119, 20);
+		contentPane.add(fileName);
+		fileName.setColumns(10);
 		
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(32)
-							.addComponent(scroll1, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
-							.addGap(77)
-							.addComponent(scroll2, GroupLayout.PREFERRED_SIZE, 318, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnVoltarAoMenu, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewButton))
-							.addGap(308)))
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(77))
-		);
+		JButton loadAfdButton = new JButton("Carregar AFD");
+		loadAfdButton.setBounds(37, 396, 119, 23);
+		contentPane.add(loadAfdButton);
 		
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(87)
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(54)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(scroll1, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scroll2, GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE))
-					.addGap(39)
-					.addComponent(btnNewButton)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnVoltarAoMenu)
-					.addContainerGap(37, Short.MAX_VALUE))
-		);
-		
-		contentPane.setLayout(gl_contentPane);
+		JButton minimizeAfdButton = new JButton("Minimalizar AFD");
+		minimizeAfdButton.setBounds(166, 396, 119, 23);
+		contentPane.add(minimizeAfdButton);
 		
 		
 		btnVoltarAoMenu.addActionListener(new BackMenuListener());
