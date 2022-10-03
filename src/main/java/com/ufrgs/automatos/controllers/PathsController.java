@@ -1,10 +1,14 @@
 package com.ufrgs.automatos.controllers;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+import com.ufrgs.automatos.JogoMain;
 
 public class PathsController {
 	
@@ -12,8 +16,49 @@ public class PathsController {
 		this("paths.yaml");
 	}
 	
+	public PathsController(File fileName) {
+		try {
+			this.paths = PathsControllerUtils.loadYamlObject(fileName);
+		} catch (Exception e) {
+			this.paths = new HashMap<>();
+			
+			PathsControllerLucio lucioController = new PathsControllerLucio(fileName);
+			
+			Set<String> finalStates = lucioController.getFinalStates();
+			Set<String> declaredStates = lucioController.getDeclaredStates();
+			
+			paths.put("estado_inicial", lucioController.getInitialState());
+			
+			Map<String, HashMap<String, String>> transitions = lucioController.getTransitions();
+			Map<String, Object> statesMap = new HashMap<>();
+			
+			for (String s : transitions.keySet()) {
+				Map<String, Object> stateMap = new HashMap<>();
+				
+				stateMap.put("caminhos", transitions.get(s));
+				stateMap.put("final", finalStates.contains(s));
+				
+				statesMap.put(s, stateMap);
+			}
+			
+			for (String s : declaredStates) {
+				if (!statesMap.containsKey(s)) {
+					Map<String, Object> stateMap = new HashMap<>();
+
+					stateMap.put("final", finalStates.contains(s));
+					
+					statesMap.put(s, stateMap);
+				}
+			}
+			
+			paths.put("estados", statesMap);
+		}
+		
+		System.out.println(getEstados());
+	}
+	
 	public PathsController(String fileName) {
-		this.paths = PathsControllerUtils.loadYamlObject(fileName);
+		this.paths = PathsControllerUtils.loadYamlObject(JogoMain.class.getClassLoader().getResourceAsStream(fileName));
 	}
 	
 	
@@ -25,7 +70,53 @@ public class PathsController {
 	public Map<String, Object> getEstados() {return PathsControllerUtils.convertObjectToMap(paths.get("estados"));}
 	
 	public String getPathsAsString() {
-		return "";
+		
+		String s = "<html>S: ";
+		String movimentos = "";
+		
+		for (String state : getEstados().keySet()) {
+			if (this.getPaths(state) == null) continue;
+			
+			s = s + state + ",";
+			
+			Map<String, Object> map = this.getPaths(state);
+			for (String terminal : map.keySet()) {
+				movimentos = movimentos + "(" + state + "," + terminal + "," + map.get(terminal) + ")<br>";
+			}
+		}
+		
+		s = s.substring(0, s.length()-1) + "<br>";
+		s = s + "A: ";
+		
+		for (String terminal : getTerminals()) {
+			s = s + terminal + ",";
+		}
+
+		s = s.substring(0, s.length()-1) + "<br>";
+		s = s + "i: " + this.getInitialState() + "<br>";
+		s = s + "F: ";
+		
+		for (String finalState : this.getEstadosFinais()) {
+			s = s + finalState + ",";
+		}
+
+		s = s.substring(0, s.length()-1) + "<br><br>";
+		s = s + movimentos + "</html>";
+		
+		return s;
+	}
+	
+	private Set<String> getTerminals() {
+		Set<String> terminals = new HashSet<>(); 
+		for (String state : getEstados().keySet()) {
+			Map<String,Object> paths = this.getPaths(state);
+			
+			if (paths == null) continue;
+			
+			for (String s : paths.keySet()) {terminals.add(s);}
+		}
+		
+		return terminals;
 	}
 	
 	private Set<String> getEstadosFinais() {

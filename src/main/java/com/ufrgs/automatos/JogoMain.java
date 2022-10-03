@@ -4,7 +4,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.ufrgs.automatos.controllers.PathsController;
-import com.ufrgs.automatos.janelas.JanelaPrincipal;
+import com.ufrgs.automatos.janelas.JanelaResolverLista;
 
 public class JogoMain {
 	
@@ -31,7 +31,7 @@ public class JogoMain {
 		System.out.println(controller.getEstados());
 		System.out.println(controller.isLangEmpty());
 		
-		new JanelaPrincipal().setVisible(true);
+		new JanelaResolverLista().setVisible(true);
 	}
 	
 	

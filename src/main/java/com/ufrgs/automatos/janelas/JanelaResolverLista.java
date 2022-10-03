@@ -96,6 +96,7 @@ public class JanelaResolverLista extends JFrame {
 		btnVoltarAoMenu.addActionListener(new BackMenuListener());
 		btnNewButton.addActionListener(new WordSolver());
 		loadAfdButton.addActionListener(new LoadAfdListener());
+		minimizeAfdButton.addActionListener(new MinimizeAfdListener());
 	}
 	
 	private void setCenterBounds(int width, int height) {
@@ -122,7 +123,10 @@ public class JanelaResolverLista extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
+			System.out.println(JogoMain.getPathsController().getEstados());
 			JogoMain.getPathsController().minimazeAutomate();
+			System.out.println(JogoMain.getPathsController().getEstados());
 			
 			textArea1.setText(JogoMain.getPathsController().getPathsAsString());
 		}
@@ -138,12 +142,14 @@ public class JanelaResolverLista extends JFrame {
 				fileName.setText("Arquivo inexistente");
 			} else {
 				try {
-					PathsController controller = new PathsController(fileName.getText());
+					PathsController controller = new PathsController(new File(fileName.getText()));
 					
 					JogoMain.setPathsController(controller);
+					textArea1.setText(JogoMain.getPathsController().getPathsAsString());
 					fileName.setText("AFD atualizado");
 				} catch (Exception exp) {
 					fileName.setText("Formatação incorreta");
+					exp.printStackTrace();
 				}
 			}
 		}
