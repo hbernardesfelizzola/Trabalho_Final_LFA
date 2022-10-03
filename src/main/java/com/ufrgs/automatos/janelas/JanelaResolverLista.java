@@ -4,24 +4,24 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.ufrgs.automatos.JogoMain;
+import com.ufrgs.automatos.controllers.PathsController;
 import com.ufrgs.automatos.controllers.ResponseWord;
-import javax.swing.JTextField;
 
 public class JanelaResolverLista extends JFrame {
 
@@ -76,7 +76,7 @@ public class JanelaResolverLista extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		fileName = new JTextField();
-		fileName.setBounds(103, 363, 119, 20);
+		fileName.setBounds(65, 363, 189, 20);
 		contentPane.add(fileName);
 		fileName.setColumns(10);
 		
@@ -88,9 +88,14 @@ public class JanelaResolverLista extends JFrame {
 		minimizeAfdButton.setBounds(166, 396, 119, 23);
 		contentPane.add(minimizeAfdButton);
 		
+		JLabel lblNewLabel_1 = new JLabel("Nome do arquivo");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(103, 338, 119, 14);
+		contentPane.add(lblNewLabel_1);
 		
 		btnVoltarAoMenu.addActionListener(new BackMenuListener());
 		btnNewButton.addActionListener(new WordSolver());
+		loadAfdButton.addActionListener(new LoadAfdListener());
 	}
 	
 	private void setCenterBounds(int width, int height) {
@@ -110,6 +115,37 @@ public class JanelaResolverLista extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
+		}
+	}
+	
+	class MinimizeAfdListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JogoMain.getPathsController().minimazeAutomate();
+			
+			textArea1.setText(JogoMain.getPathsController().getPathsAsString());
+		}
+	}
+	
+	class LoadAfdListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			File f = new File(fileName.getText());
+		
+			if (!f.exists()) {
+				fileName.setText("Arquivo inexistente");
+			} else {
+				try {
+					PathsController controller = new PathsController(fileName.getText());
+					
+					JogoMain.setPathsController(controller);
+					fileName.setText("AFD atualizado");
+				} catch (Exception exp) {
+					fileName.setText("Formatação incorreta");
+				}
+			}
 		}
 	}
 	

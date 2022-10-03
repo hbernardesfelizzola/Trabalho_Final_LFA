@@ -24,6 +24,10 @@ public class PathsController {
 	
 	public Map<String, Object> getEstados() {return PathsControllerUtils.convertObjectToMap(paths.get("estados"));}
 	
+	public String getPathsAsString() {
+		return "";
+	}
+	
 	private Set<String> getEstadosFinais() {
 		Set<String> estadosFinais = new HashSet<>();
 		
