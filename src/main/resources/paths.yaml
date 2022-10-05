@@ -1,9 +1,10 @@
 estado_inicial: praca
 
 
-
 estados:
   praca:
+    name: "Praça"
+    mensagem: "Olá! Seja bem-vindo a Praça da Cidade de Automatus. Sua missão aqui é bem clara, precisamos que você leve a joia do nosso vilarejo até o castelo de Turinis. Nessa jornada você enfrentará caminhos árduos, logo, preste atenção no seu caminho e pense em descansar (mas cuide o local de descanso)"
     caminhos:
       w: loja
       e: saida_oeste
@@ -12,63 +13,89 @@ estados:
       s: estalagem
   
   loja:
+    name: "Loja"
+    mensagem: "Você passa na Loja de itens, é um viajante astuto que entende a necessidade de se preparar pela jornada que vem à frente, compra uma poção com o atendente e vai à luta."
     caminhos:
       b: loja
       d: saida_oeste
   
   estalagem:
+    name: "Estalagem"
+    mensagem: "Você chega na estalagem e se depara com um mercador, ele te diz que o descanso é bom mas só quando se tem um bom local para dormir..."
     caminhos:
       e: saida_leste
       b: estalagem
   
   taverna:
+    name: "Taverna"
+    mensagem: "Sua vontade de aventura é muito boa, e toda boa aventura começa em uma taverna! Lá, você consegue a informação de alguns caminhos que podem te ajudar a chegar no destino e aproveita para tomar boas cervejas..."
     caminhos:
       b: taverna
       d: saida_leste
       s: estalagem
   
   saida_leste:
+    name: "Saída leste"
+    mensagem: "Você chega na saída leste, você finalmente se sente confiante para iniciar sua aventura"
     caminhos:
       d: montanha
       b: saida_leste
       w: pantano
   
   saida_oeste:
+    name: "Saída oeste"
+    mensagem: "Você chega na saída oeste, mas não se sente muito confiante com sua decisão"
     caminhos:
       b: saida_oeste
       s: floresta
       w: campo
   
   campo:
+    name: "Campo"
+    mensagem: "Você chega no Campo, ele é limpo, extenso e ensolarado, você sente o vento bater na sua cara e sua esperança de estar no caminho correto aumenta, um descanso na viagem seria bom, e mesmo sem ele, você sabe que pode chegar até o seu destino."
     caminhos:
       b: campo
       d: destino1
   
   floresta:
+    name: "Floresta"
+    mensagem: "Você chega na floresta... No caminho, sua poção foi útil para lhe ajudar a curar de um envenenamento causado por um cogumelo que você comeu no caminho, você se sente cansado, um descanso pode ser a melhor solução, ou não..."
     caminhos:
       b: trolls
       e: destino1
   
   destino1:
+    name: "Destino1"
+    mensagem: "Parabéns Você chegou! Mas chegou no local errado... Confuso, você é recebido em Normus e, mesmo sem saber muito bem o que está acontecendo, sabe que não está no local que deveria e embarca em uma carruagem de volta para a Praça da Cidade de Autômatus..."
     final: false
   
   trolls:
+    name: "Trolls"
+    mensagem: "Depois de alguns esforços, você consegue achar um local de descanso. Seus olhos pesam, você sente o vento bater na sua cara... Em conjunto com o vento, um bastão de madeira empunhado por um troll te derruba e torna seu descanso, eterno..."
     final: false
   
   pantano:
+    name: "Pantano"
+    mensagem: "Você chega no Pântano, é um local molhado, frio e que te incentiva a querer passar o mais rápido possível por ali... um descanso até passa pela sua cabeça, mas você fica em dúvida se deve faze-lo em um local tão sórdido..."
     caminhos:
       b: trolls
       w: destino2
       d: destino3
   
   destino2:
+    name: "Destino2"
+    mensagem: "No meio do pântano você encontra ruínas de um lugar que um dia foi chamado de lar por muitos que ali já não estão mais... Perdido, você desiste de sua jornada e volta para a Praça da Cidade de Autômatus"
     final: false
   
   montanha:
+    name: "Montanha"
+    mensagem: "O Caminho não é fácil... você sobe a montanha que escolheu enfrentar, sente um cansaço muito grande devido ao alto esforço que faz para subir nas elevações que te separam do preterido destino, mas pensa se a melhor coisa a se fazer é parar por ali ou continuar a sua jornada..."
     caminhos:
       s: destino4
       b: goblins
       e: destino3
   
   destino3:
+    name: "Destino3"
+    mensagem: "Todo seu cansaço gera um desconforto extremo no seu corpo, você vai de encontro ao chão... você percebe uma construção por perto. Ao chegar na construção, você é recebido com festa! Sua jornada teve sucesso e você conseguiu levar a joia da cidade para o Castelo de Turini!!"
     final: true

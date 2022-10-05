@@ -21,12 +21,25 @@ import javax.swing.border.EmptyBorder;
 
 import com.ufrgs.automatos.JogoMain;
 import com.ufrgs.automatos.controllers.PathsController;
-import com.ufrgs.automatos.controllers.ResponseWord;
+import com.ufrgs.automatos.entity.ResponseWord;
+
 import java.awt.Font;
 
 public class JanelaResolverLista extends JFrame {
 
 	private static final long serialVersionUID = 8667039720767982981L;
+	
+	private static JanelaResolverLista instance;
+
+	public static JanelaResolverLista getInstance() {
+		if (instance == null) {
+			instance = new JanelaResolverLista();
+		}
+		
+		return instance;
+	}
+	
+	
 	private JPanel contentPane;
 	
 	private JButton btnNewButton, btnVoltarAoMenu;
@@ -40,6 +53,8 @@ public class JanelaResolverLista extends JFrame {
 	 * Create the panel.
 	 */
 	public JanelaResolverLista() {
+		instance = this;
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
@@ -143,7 +158,8 @@ public class JanelaResolverLista extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			getInstance().setVisible(false);
+			JanelaPrincipal.getInstance().setVisible(true);
 		}
 	}
 	

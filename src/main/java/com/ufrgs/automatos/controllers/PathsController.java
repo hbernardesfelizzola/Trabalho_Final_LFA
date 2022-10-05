@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import com.ufrgs.automatos.JogoMain;
+import com.ufrgs.automatos.entity.ResponseWord;
 
 public class PathsController {
 	
@@ -133,23 +134,48 @@ public class PathsController {
 	}
 	
 	
-	
-	public ResponseWord executeWord(String str) {
-		String current = getInitialState();
+	public String getNodeName(String node) {
+		if (getEstados().get(node) != null) {
+			Map<String, Object> nodoPaths = PathsControllerUtils.convertObjectToMap(getEstados().get(node));
+			
+			return (String) nodoPaths.get("name");
+		}
 		
+		return "Insanidade";
+	}
+	
+	public String getNodeMessage(String node) {
+		if (getEstados().get(node) != null) {
+			Map<String, Object> nodoPaths = PathsControllerUtils.convertObjectToMap(getEstados().get(node));
+
+			return (String) nodoPaths.get("mensagem");
+		}
+		
+		return "Você entrou em crise pela pressão que esta aventura causou em você e está tentando ir para lugares sem sentido, sua aventura termina aqui";
+	}
+	
+	public String getNodeFromWord(String str) {
+		String current = getInitialState();
+
 		for (int i = 0; i < str.length(); i++) {
 			char c = str.charAt(i);
 			
 			Map<String, Object> terminals = getPaths(current);
 			
 			if (terminals == null || terminals.get(c + "") == null) {
-				return ResponseWord.INDEFINITION;
+				return "";
 			}
 			
 			current = (String) terminals.get(c + "");
-			
-			System.out.println("Andou para " + current);
 		}
+		
+		return current;
+	}
+	
+	public ResponseWord executeWord(String str) {
+		String current = getNodeFromWord(str);
+		
+		if (current.equals("")) return ResponseWord.INDEFINITION;
 		
 		return ResponseWord.convertBooleanToResponse(isNodeFinal(current));
 	}
@@ -164,12 +190,15 @@ public class PathsController {
 		return responses;
 	}
 	
-	public boolean isLangFinite() {
-		for (String s : getEstados().keySet()) {
-			if (hasWayToItSelf(s)) return false;
-		}
+
+	public boolean hasNodeTerminals(String node) {
+		Map<String, Object> map = this.getPaths(node);
 		
-		return true;
+		return map != null && map.size() > 0;
+	}
+	
+	public boolean hasTerminals(String word) {
+		return this.hasNodeTerminals(getNodeFromWord(word));
 	}
 	
 	public boolean isLangEmpty() {
@@ -181,6 +210,14 @@ public class PathsController {
 					return false;
 				}
 			}
+		}
+		
+		return true;
+	}
+	
+	public boolean isLangFinite() {
+		for (String s : getEstados().keySet()) {
+			if (hasWayToItSelf(s)) return false;
 		}
 		
 		return true;

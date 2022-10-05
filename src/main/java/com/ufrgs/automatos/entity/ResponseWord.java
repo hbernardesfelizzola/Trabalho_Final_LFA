@@ -1,4 +1,4 @@
-package com.ufrgs.automatos.controllers;
+package com.ufrgs.automatos.entity;
 
 public enum ResponseWord {
 	
